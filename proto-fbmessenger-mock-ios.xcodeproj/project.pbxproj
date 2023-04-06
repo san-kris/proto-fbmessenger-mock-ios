@@ -14,6 +14,7 @@
 		AA689F2829DE09B0003B8CFA /* proto_fbmessenger_mock_ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AA689F2629DE09B0003B8CFA /* proto_fbmessenger_mock_ios.xcdatamodeld */; };
 		AA689F2A29DE09B1003B8CFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA689F2929DE09B1003B8CFA /* Assets.xcassets */; };
 		AA689F2D29DE09B1003B8CFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA689F2B29DE09B1003B8CFA /* LaunchScreen.storyboard */; };
+		AA689F3529DE1C5C003B8CFA /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F3429DE1C5C003B8CFA /* FriendCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		AA689F2929DE09B1003B8CFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA689F2C29DE09B1003B8CFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA689F2E29DE09B1003B8CFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AA689F3429DE1C5C003B8CFA /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				AA689F2B29DE09B1003B8CFA /* LaunchScreen.storyboard */,
 				AA689F2E29DE09B1003B8CFA /* Info.plist */,
 				AA689F2629DE09B0003B8CFA /* proto_fbmessenger_mock_ios.xcdatamodeld */,
+				AA689F3429DE1C5C003B8CFA /* FriendCell.swift */,
 			);
 			path = "proto-fbmessenger-mock-ios";
 			sourceTree = "<group>";
@@ -145,6 +148,7 @@
 				AA689F1E29DE09B0003B8CFA /* AppDelegate.swift in Sources */,
 				AA689F2829DE09B0003B8CFA /* proto_fbmessenger_mock_ios.xcdatamodeld in Sources */,
 				AA689F2029DE09B0003B8CFA /* SceneDelegate.swift in Sources */,
+				AA689F3529DE1C5C003B8CFA /* FriendCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

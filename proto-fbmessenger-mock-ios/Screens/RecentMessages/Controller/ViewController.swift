@@ -11,13 +11,19 @@ class FriendsController: UICollectionViewController, UICollectionViewDelegateFlo
 
     let cellID = "cellID"
     
+    var messages = [Message]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupDummyData()
+        
         setupView()
      
     }
     
     func setupView() -> Void {
+        
         navigationItem.title = "Friends"
         navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -32,12 +38,12 @@ class FriendsController: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return messages.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! FriendCell
-//        cell.backgroundColor = .darkGray
+        cell.message = messages[indexPath.item]
         return cell
     }
     
@@ -51,6 +57,7 @@ class FriendsController: UICollectionViewController, UICollectionViewDelegateFlo
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
+        print("screen dimention: \(size)")
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.invalidateLayout()
     }

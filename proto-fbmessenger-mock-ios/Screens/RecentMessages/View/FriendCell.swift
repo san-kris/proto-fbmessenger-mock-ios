@@ -9,6 +9,31 @@ import UIKit
 
 class FriendCell: UICollectionViewCell {
     
+    // save the constraint for message preview
+    var messagePreviewConstraint: NSLayoutConstraint?
+    
+    var message: Message? {
+        didSet{
+            print("Message received in Friend Cell")
+            guard let message else {return}
+            
+            // set user name
+            if let name = message.friend?.name{
+                profileNameLabel.text = name
+            }
+            // set profile picture
+            if let imageName = message.friend?.profileImageName{
+                profileImageView.image = UIImage(named: imageName)
+            }
+            // set message preview
+            if let text = message.text{
+                profileMessagePreviewLabel.text = text
+                updateLayout()
+            }
+            
+        }
+    }
+    
     let profileImageWidthHeight: CGFloat = 70
     
     let profileNameLabel: UILabel = {
@@ -39,7 +64,7 @@ class FriendCell: UICollectionViewCell {
     
     let profileMessagePreviewLabel: UILabel = {
         let label = UILabel()
-        label.text = "Your friends message goes here. Bla Bla blah blah Bla this is too long... "
+        label.text = "Preview"
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .gray
         label.backgroundColor = .white
@@ -155,20 +180,37 @@ class FriendCell: UICollectionViewCell {
         
         // calculating height of descripton lable dynamically
         let text = profileMessagePreviewLabel.text
-        let boundingRect = NSString(string: text!).boundingRect(with: CGSize(width: frame.width - 120, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: nil, context: nil)
+        let boundingRect = NSString(string: text!).boundingRect(with: CGSize(width: frame.width - 120, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)], context: nil)
             
-        print(boundingRect)
-        print(frame.width)
+        print("Initial Bounding Rec: \(boundingRect)")
+        
+        let descLabelHeight = boundingRect.height
+        
+        profileMessagePreviewLabel.translatesAutoresizingMaskIntoConstraints = false
+        messagePreviewConstraint = profileMessagePreviewLabel.heightAnchor.constraint(equalToConstant: descLabelHeight)
+        messagePreviewConstraint!.isActive = true
+        
+    }
+    
+    func updateLayout() -> Void {
+        
+        guard let messagePreviewConstraint else {return}
+        messagePreviewConstraint.isActive = false
+        
+        // calculating height of descripton lable dynamically
+        let text = profileMessagePreviewLabel.text
+        let boundingRect = NSString(string: text!).boundingRect(with: CGSize(width: frame.width - 120, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)], context: nil)
+            
+        print("Updated Bounding Rect: \(boundingRect)")
         
         var descLabelHeight = boundingRect.height
         
-        if boundingRect.height > 14 {
-            descLabelHeight = 35
+        if boundingRect.height > 37 {
+            descLabelHeight = 37
         }
         
-        
-        profileMessagePreviewLabel.translatesAutoresizingMaskIntoConstraints = false
-        profileMessagePreviewLabel.heightAnchor.constraint(equalToConstant: descLabelHeight).isActive = true
+        messagePreviewConstraint.constant = descLabelHeight
+        messagePreviewConstraint.isActive = true
         
     }
     

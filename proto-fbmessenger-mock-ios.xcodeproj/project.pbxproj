@@ -15,6 +15,13 @@
 		AA689F2A29DE09B1003B8CFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA689F2929DE09B1003B8CFA /* Assets.xcassets */; };
 		AA689F2D29DE09B1003B8CFA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA689F2B29DE09B1003B8CFA /* LaunchScreen.storyboard */; };
 		AA689F3529DE1C5C003B8CFA /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F3429DE1C5C003B8CFA /* FriendCell.swift */; };
+		AA689F3D29DF2534003B8CFA /* FriendProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F3C29DF2534003B8CFA /* FriendProfile.swift */; };
+		AA689F3F29DF2556003B8CFA /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F3E29DF2556003B8CFA /* Message.swift */; };
+		AA689F4129DF261E003B8CFA /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F4029DF261E003B8CFA /* ViewController+Extension.swift */; };
+		AA689F4E29DF9C14003B8CFA /* MessageCD+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F4A29DF9C14003B8CFA /* MessageCD+CoreDataClass.swift */; };
+		AA689F4F29DF9C14003B8CFA /* MessageCD+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F4B29DF9C14003B8CFA /* MessageCD+CoreDataProperties.swift */; };
+		AA689F5029DF9C14003B8CFA /* FriendCD+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F4C29DF9C14003B8CFA /* FriendCD+CoreDataClass.swift */; };
+		AA689F5129DF9C14003B8CFA /* FriendCD+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F4D29DF9C14003B8CFA /* FriendCD+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +35,13 @@
 		AA689F2C29DE09B1003B8CFA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA689F2E29DE09B1003B8CFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA689F3429DE1C5C003B8CFA /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
+		AA689F3C29DF2534003B8CFA /* FriendProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfile.swift; sourceTree = "<group>"; };
+		AA689F3E29DF2556003B8CFA /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		AA689F4029DF261E003B8CFA /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
+		AA689F4A29DF9C14003B8CFA /* MessageCD+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCD+CoreDataClass.swift"; sourceTree = "<group>"; };
+		AA689F4B29DF9C14003B8CFA /* MessageCD+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCD+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		AA689F4C29DF9C14003B8CFA /* FriendCD+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FriendCD+CoreDataClass.swift"; sourceTree = "<group>"; };
+		AA689F4D29DF9C14003B8CFA /* FriendCD+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FriendCD+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +58,10 @@
 		AA689F1129DE09B0003B8CFA = {
 			isa = PBXGroup;
 			children = (
+				AA689F4A29DF9C14003B8CFA /* MessageCD+CoreDataClass.swift */,
+				AA689F4B29DF9C14003B8CFA /* MessageCD+CoreDataProperties.swift */,
+				AA689F4C29DF9C14003B8CFA /* FriendCD+CoreDataClass.swift */,
+				AA689F4D29DF9C14003B8CFA /* FriendCD+CoreDataProperties.swift */,
 				AA689F1C29DE09B0003B8CFA /* proto-fbmessenger-mock-ios */,
 				AA689F1B29DE09B0003B8CFA /* Products */,
 			);
@@ -60,17 +78,60 @@
 		AA689F1C29DE09B0003B8CFA /* proto-fbmessenger-mock-ios */ = {
 			isa = PBXGroup;
 			children = (
+				AA689F3729DF2459003B8CFA /* Screens */,
 				AA689F1D29DE09B0003B8CFA /* AppDelegate.swift */,
 				AA689F1F29DE09B0003B8CFA /* SceneDelegate.swift */,
-				AA689F2129DE09B0003B8CFA /* ViewController.swift */,
 				AA689F2329DE09B0003B8CFA /* Main.storyboard */,
 				AA689F2929DE09B1003B8CFA /* Assets.xcassets */,
 				AA689F2B29DE09B1003B8CFA /* LaunchScreen.storyboard */,
 				AA689F2E29DE09B1003B8CFA /* Info.plist */,
 				AA689F2629DE09B0003B8CFA /* proto_fbmessenger_mock_ios.xcdatamodeld */,
-				AA689F3429DE1C5C003B8CFA /* FriendCell.swift */,
 			);
 			path = "proto-fbmessenger-mock-ios";
+			sourceTree = "<group>";
+		};
+		AA689F3729DF2459003B8CFA /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				AA689F3829DF2472003B8CFA /* RecentMessages */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		AA689F3829DF2472003B8CFA /* RecentMessages */ = {
+			isa = PBXGroup;
+			children = (
+				AA689F3B29DF24B0003B8CFA /* Controller */,
+				AA689F3A29DF24A7003B8CFA /* View */,
+				AA689F3929DF2499003B8CFA /* Model */,
+			);
+			path = RecentMessages;
+			sourceTree = "<group>";
+		};
+		AA689F3929DF2499003B8CFA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AA689F3C29DF2534003B8CFA /* FriendProfile.swift */,
+				AA689F3E29DF2556003B8CFA /* Message.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AA689F3A29DF24A7003B8CFA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AA689F3429DE1C5C003B8CFA /* FriendCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AA689F3B29DF24B0003B8CFA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AA689F2129DE09B0003B8CFA /* ViewController.swift */,
+				AA689F4029DF261E003B8CFA /* ViewController+Extension.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,11 +205,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA689F4129DF261E003B8CFA /* ViewController+Extension.swift in Sources */,
+				AA689F5029DF9C14003B8CFA /* FriendCD+CoreDataClass.swift in Sources */,
+				AA689F5129DF9C14003B8CFA /* FriendCD+CoreDataProperties.swift in Sources */,
 				AA689F2229DE09B0003B8CFA /* ViewController.swift in Sources */,
+				AA689F4E29DF9C14003B8CFA /* MessageCD+CoreDataClass.swift in Sources */,
 				AA689F1E29DE09B0003B8CFA /* AppDelegate.swift in Sources */,
 				AA689F2829DE09B0003B8CFA /* proto_fbmessenger_mock_ios.xcdatamodeld in Sources */,
 				AA689F2029DE09B0003B8CFA /* SceneDelegate.swift in Sources */,
 				AA689F3529DE1C5C003B8CFA /* FriendCell.swift in Sources */,
+				AA689F3D29DF2534003B8CFA /* FriendProfile.swift in Sources */,
+				AA689F4F29DF9C14003B8CFA /* MessageCD+CoreDataProperties.swift in Sources */,
+				AA689F3F29DF2556003B8CFA /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

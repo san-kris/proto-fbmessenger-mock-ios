@@ -11,12 +11,18 @@ class FriendsController: UICollectionViewController, UICollectionViewDelegateFlo
 
     let cellID = "cellID"
     
-    var messages = [Message]()
+    // var messages = [Message]()
+    
+    var messages = [MessageCD]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupDummyData()
+        // setting up dummy data array
+        // setupDummyData()
+        
+        // setting dummy data in Core Data
+        setupDummyCoreData()
         
         setupView()
      

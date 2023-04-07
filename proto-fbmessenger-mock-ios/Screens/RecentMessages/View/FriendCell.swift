@@ -12,7 +12,7 @@ class FriendCell: UICollectionViewCell {
     // save the constraint for message preview
     var messagePreviewConstraint: NSLayoutConstraint?
     
-    var message: Message? {
+    var message: MessageCD? {
         didSet{
             print("Message received in Friend Cell")
             guard let message else {return}
@@ -22,7 +22,7 @@ class FriendCell: UICollectionViewCell {
                 profileNameLabel.text = name
             }
             // set profile picture
-            if let imageName = message.friend?.profileImageName{
+            if let imageName = message.friend?.profilePicture{
                 profileImageView.image = UIImage(named: imageName)
             }
             // set message preview

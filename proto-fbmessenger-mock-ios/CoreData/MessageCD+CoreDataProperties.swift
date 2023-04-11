@@ -2,7 +2,7 @@
 //  MessageCD+CoreDataProperties.swift
 //  proto-fbmessenger-mock-ios
 //
-//  Created by Santosh Krishnamurthy on 4/6/23.
+//  Created by Santosh Krishnamurthy on 4/11/23.
 //
 //
 
@@ -18,6 +18,7 @@ extension MessageCD {
 
     @NSManaged public var text: String?
     @NSManaged public var date: Date?
+    @NSManaged public var fromSender: Bool
     @NSManaged public var friend: FriendCD?
 
 }

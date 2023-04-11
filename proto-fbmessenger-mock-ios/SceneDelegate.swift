@@ -20,8 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         window?.makeKeyAndVisible()
         
-        let viewController = FriendsController(collectionViewLayout: UICollectionViewFlowLayout())
-        window?.rootViewController = UINavigationController(rootViewController: viewController)
+        // let viewController = FriendsController(collectionViewLayout: UICollectionViewFlowLayout())
+        // window?.rootViewController = UINavigationController(rootViewController: viewController)
+        window?.rootViewController = MessengerTabBarController()
         
     }
 

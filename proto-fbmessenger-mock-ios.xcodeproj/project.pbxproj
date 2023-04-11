@@ -18,11 +18,14 @@
 		AA689F3D29DF2534003B8CFA /* FriendProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F3C29DF2534003B8CFA /* FriendProfile.swift */; };
 		AA689F3F29DF2556003B8CFA /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F3E29DF2556003B8CFA /* Message.swift */; };
 		AA689F4129DF261E003B8CFA /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F4029DF261E003B8CFA /* ViewController+Extension.swift */; };
-		AA689F4E29DF9C14003B8CFA /* MessageCD+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F4A29DF9C14003B8CFA /* MessageCD+CoreDataClass.swift */; };
-		AA689F4F29DF9C14003B8CFA /* MessageCD+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F4B29DF9C14003B8CFA /* MessageCD+CoreDataProperties.swift */; };
 		AA689F5029DF9C14003B8CFA /* FriendCD+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F4C29DF9C14003B8CFA /* FriendCD+CoreDataClass.swift */; };
 		AA689F5129DF9C14003B8CFA /* FriendCD+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F4D29DF9C14003B8CFA /* FriendCD+CoreDataProperties.swift */; };
 		AA689F5429DFA8F2003B8CFA /* ColorTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F5329DFA8F2003B8CFA /* ColorTransformer.swift */; };
+		AA689F5A29E228EC003B8CFA /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F5929E228EC003B8CFA /* ChatLogController.swift */; };
+		AA689F5C29E244CA003B8CFA /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F5B29E244CA003B8CFA /* MessageCell.swift */; };
+		AA689F6029E2FB76003B8CFA /* MessengerTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F5F29E2FB76003B8CFA /* MessengerTabBarController.swift */; };
+		AA689F6329E5B5C5003B8CFA /* MessageCD+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F6129E5B5C5003B8CFA /* MessageCD+CoreDataClass.swift */; };
+		AA689F6429E5B5C5003B8CFA /* MessageCD+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA689F6229E5B5C5003B8CFA /* MessageCD+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,11 +42,14 @@
 		AA689F3C29DF2534003B8CFA /* FriendProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfile.swift; sourceTree = "<group>"; };
 		AA689F3E29DF2556003B8CFA /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		AA689F4029DF261E003B8CFA /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
-		AA689F4A29DF9C14003B8CFA /* MessageCD+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCD+CoreDataClass.swift"; sourceTree = "<group>"; };
-		AA689F4B29DF9C14003B8CFA /* MessageCD+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCD+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AA689F4C29DF9C14003B8CFA /* FriendCD+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FriendCD+CoreDataClass.swift"; sourceTree = "<group>"; };
 		AA689F4D29DF9C14003B8CFA /* FriendCD+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FriendCD+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		AA689F5329DFA8F2003B8CFA /* ColorTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTransformer.swift; sourceTree = "<group>"; };
+		AA689F5929E228EC003B8CFA /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
+		AA689F5B29E244CA003B8CFA /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		AA689F5F29E2FB76003B8CFA /* MessengerTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerTabBarController.swift; sourceTree = "<group>"; };
+		AA689F6129E5B5C5003B8CFA /* MessageCD+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCD+CoreDataClass.swift"; sourceTree = "<group>"; };
+		AA689F6229E5B5C5003B8CFA /* MessageCD+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessageCD+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +98,9 @@
 		AA689F3729DF2459003B8CFA /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				AA689F5D29E2FB0C003B8CFA /* TabBar */,
 				AA689F3829DF2472003B8CFA /* RecentMessages */,
+				AA689F5529E2288E003B8CFA /* ChatLog */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -136,13 +144,62 @@
 		AA689F5229DFA8A5003B8CFA /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				AA689F4A29DF9C14003B8CFA /* MessageCD+CoreDataClass.swift */,
-				AA689F4B29DF9C14003B8CFA /* MessageCD+CoreDataProperties.swift */,
+				AA689F6129E5B5C5003B8CFA /* MessageCD+CoreDataClass.swift */,
+				AA689F6229E5B5C5003B8CFA /* MessageCD+CoreDataProperties.swift */,
 				AA689F4C29DF9C14003B8CFA /* FriendCD+CoreDataClass.swift */,
 				AA689F4D29DF9C14003B8CFA /* FriendCD+CoreDataProperties.swift */,
 				AA689F5329DFA8F2003B8CFA /* ColorTransformer.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		AA689F5529E2288E003B8CFA /* ChatLog */ = {
+			isa = PBXGroup;
+			children = (
+				AA689F5829E228B8003B8CFA /* View */,
+				AA689F5729E228A9003B8CFA /* Model */,
+				AA689F5629E2289D003B8CFA /* Controller */,
+			);
+			path = ChatLog;
+			sourceTree = "<group>";
+		};
+		AA689F5629E2289D003B8CFA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AA689F5929E228EC003B8CFA /* ChatLogController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		AA689F5729E228A9003B8CFA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		AA689F5829E228B8003B8CFA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				AA689F5B29E244CA003B8CFA /* MessageCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		AA689F5D29E2FB0C003B8CFA /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				AA689F5E29E2FB1F003B8CFA /* Controller */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		AA689F5E29E2FB1F003B8CFA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				AA689F5F29E2FB76003B8CFA /* MessengerTabBarController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -217,17 +274,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA689F4129DF261E003B8CFA /* ViewController+Extension.swift in Sources */,
+				AA689F6329E5B5C5003B8CFA /* MessageCD+CoreDataClass.swift in Sources */,
 				AA689F5029DF9C14003B8CFA /* FriendCD+CoreDataClass.swift in Sources */,
 				AA689F5129DF9C14003B8CFA /* FriendCD+CoreDataProperties.swift in Sources */,
+				AA689F6029E2FB76003B8CFA /* MessengerTabBarController.swift in Sources */,
 				AA689F2229DE09B0003B8CFA /* ViewController.swift in Sources */,
-				AA689F4E29DF9C14003B8CFA /* MessageCD+CoreDataClass.swift in Sources */,
 				AA689F5429DFA8F2003B8CFA /* ColorTransformer.swift in Sources */,
 				AA689F1E29DE09B0003B8CFA /* AppDelegate.swift in Sources */,
 				AA689F2829DE09B0003B8CFA /* proto_fbmessenger_mock_ios.xcdatamodeld in Sources */,
 				AA689F2029DE09B0003B8CFA /* SceneDelegate.swift in Sources */,
 				AA689F3529DE1C5C003B8CFA /* FriendCell.swift in Sources */,
+				AA689F5A29E228EC003B8CFA /* ChatLogController.swift in Sources */,
+				AA689F5C29E244CA003B8CFA /* MessageCell.swift in Sources */,
 				AA689F3D29DF2534003B8CFA /* FriendProfile.swift in Sources */,
-				AA689F4F29DF9C14003B8CFA /* MessageCD+CoreDataProperties.swift in Sources */,
+				AA689F6429E5B5C5003B8CFA /* MessageCD+CoreDataProperties.swift in Sources */,
 				AA689F3F29DF2556003B8CFA /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

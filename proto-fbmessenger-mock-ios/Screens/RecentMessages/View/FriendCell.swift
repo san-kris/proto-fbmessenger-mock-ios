@@ -9,6 +9,13 @@ import UIKit
 
 class FriendCell: UICollectionViewCell {
     
+    // use this highlight variabl to check if a cell is highlighted when selected
+    override var isHighlighted: Bool {
+        didSet{
+            backgroundColor = isHighlighted ? .blue : .white
+        }
+    }
+    
     // save the constraint for message preview
     var messagePreviewConstraint: NSLayoutConstraint?
     
@@ -29,6 +36,23 @@ class FriendCell: UICollectionViewCell {
             if let text = message.text{
                 profileMessagePreviewLabel.text = text
                 updateLayout()
+            }
+            
+            if let date = message.date{
+                let dateformatter = DateFormatter()
+                dateformatter.dateFormat = "h:mm a"
+                
+                let secondsInDay: TimeInterval = 60 * 60 * 24
+                let elapsedTimeInSeconds = -date.timeIntervalSinceNow
+                if elapsedTimeInSeconds > 7 * secondsInDay {
+                    dateformatter.dateFormat = "MM/dd/yy"
+                    
+                } else if elapsedTimeInSeconds > secondsInDay{
+                    dateformatter.dateFormat = "EEE"
+                }
+                // print(elapsedTimeInSeconds)
+                
+                messageTimeLabel.text = dateformatter.string(from: date)
             }
             
         }
@@ -203,7 +227,7 @@ class FriendCell: UICollectionViewCell {
             
         print("Updated Bounding Rect: \(boundingRect)")
         
-        var descLabelHeight = boundingRect.height
+        var descLabelHeight = boundingRect.height + 5
         
         if boundingRect.height > 37 {
             descLabelHeight = 37

@@ -24,27 +24,27 @@ extension FriendsController{
             friend.setValuesForKeys([#keyPath(FriendCD.name) : "John Smith",
                                      #keyPath(FriendCD.profilePicture) : "confused"])
             
-            createMessageWithText(text: "Hello", from: friend, minutesAgo: 60 * 27, fromSender: true,context: context)
-            createMessageWithText(text: "How are you", from: friend, minutesAgo: 60 * 26,fromSender: true, context: context)
-            createMessageWithText(text: "All is well", from: friend, minutesAgo: 60 * 25, fromSender: false,context: context)
+            _ = FriendsController.createMessageWithText(text: "Hello", from: friend, minutesAgo: 60 * 27, fromSender: true,context: context)
+            _ = FriendsController.createMessageWithText(text: "How are you", from: friend, minutesAgo: 60 * 26,fromSender: true, context: context)
+            _ = FriendsController.createMessageWithText(text: "All is well", from: friend, minutesAgo: 60 * 25, fromSender: false,context: context)
             
             let friend2 = FriendCD(context: context)
             friend2.setValuesForKeys([#keyPath(FriendCD.name) : "Ro Eel",
                                      #keyPath(FriendCD.profilePicture) : "icons8-jack-o-lantern-96"])
             
-            createMessageWithText(text: "Hello", from: friend2, minutesAgo: 5, fromSender: false,context: context)
-            createMessageWithText(text: "I am hungry", from: friend2, minutesAgo: 4, fromSender: true,context: context)
-            createMessageWithText(text: "Give me fooood", from: friend2, minutesAgo: 3, fromSender: false,context: context)
-            createMessageWithText(text: "I am now hangry. I am very hot. I am very cold. I am bored. I want to play games ... I am now hangry. I am very hot. I am very cold. I am bored. I want to play games ...", from: friend2, minutesAgo: 2, fromSender: true,context: context)
+            _ = FriendsController.createMessageWithText(text: "Hello", from: friend2, minutesAgo: 5, fromSender: false,context: context)
+            _ = FriendsController.createMessageWithText(text: "I am hungry", from: friend2, minutesAgo: 4, fromSender: true,context: context)
+            _ = FriendsController.createMessageWithText(text: "Give me fooood", from: friend2, minutesAgo: 3, fromSender: false,context: context)
+            _ = FriendsController.createMessageWithText(text: "I am now hangry. I am very hot. I am very cold. I am bored. I want to play games ... I am now hangry. I am very hot. I am very cold. I am bored. I want to play games ...", from: friend2, minutesAgo: 2, fromSender: true,context: context)
             
             let friend3 = FriendCD(context: context)
             friend3.setValuesForKeys([#keyPath(FriendCD.name) : "Ray El",
                                      #keyPath(FriendCD.profilePicture) : "icons8-sunflower-96"])
             
-            createMessageWithText(text: "Hello", from: friend3, minutesAgo: 5, fromSender: false,context: context)
-            createMessageWithText(text: "Can I watch TV", from: friend3, minutesAgo: 4, fromSender: true,context: context)
-            createMessageWithText(text: "Give me fooood", from: friend3, minutesAgo: 3, fromSender: false,context: context)
-            createMessageWithText(text: "What do we have? What options do I have? I dont want this, I dont want that. I am the best", from: friend3, minutesAgo: 2, fromSender: true, context: context)
+            _ = FriendsController.createMessageWithText(text: "Hello", from: friend3, minutesAgo: 5, fromSender: false,context: context)
+            _ = FriendsController.createMessageWithText(text: "Can I watch TV", from: friend3, minutesAgo: 4, fromSender: true,context: context)
+            _ = FriendsController.createMessageWithText(text: "Give me fooood", from: friend3, minutesAgo: 3, fromSender: false,context: context)
+            _ = FriendsController.createMessageWithText(text: "What do we have? What options do I have? I dont want this, I dont want that. I am the best", from: friend3, minutesAgo: 2, fromSender: true, context: context)
 
             delegate?.saveContext()
             
@@ -128,12 +128,13 @@ extension FriendsController{
         }
     }
     
-    private func createMessageWithText(text: String, from: FriendCD, minutesAgo: Double, fromSender: Bool, context: NSManagedObjectContext){
+    static func createMessageWithText(text: String, from: FriendCD, minutesAgo: Double, fromSender: Bool, context: NSManagedObjectContext) -> MessageCD{
         let message = MessageCD(context: context)
         message.setValuesForKeys([#keyPath(MessageCD.text) : text,
                                   #keyPath(MessageCD.date) : Date().addingTimeInterval(TimeInterval(-minutesAgo * 60)),
                                   #keyPath(MessageCD.fromSender): fromSender,
                                   #keyPath(MessageCD.friend) : from])
+        return message
     }
     
     func setupDummyData() -> Void {

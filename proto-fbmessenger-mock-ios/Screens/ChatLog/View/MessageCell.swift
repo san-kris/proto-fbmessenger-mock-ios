@@ -15,9 +15,9 @@ class MessageCell: UICollectionViewCell{
     var message: MessageCD? {
         didSet{
             guard let message else {return}
-            print("Message set in cell. FromSender: \(message.fromSender); Text: \(message.text!)")
+            // print("Message set in cell. FromSender: \(message.fromSender); Text: \(message.text!)")
             messageLabel.text = message.text!
-            senderBubbleAlignment()
+            setupLayout()
         }
     }
     
@@ -33,17 +33,17 @@ class MessageCell: UICollectionViewCell{
         let label = UILabel()
         label.text = "Message Goes here"
         label.font = UIFont.systemFont(ofSize: 14)
+        // label.backgroundColor = .green
         label.textColor = .darkGray
         label.numberOfLines = 0
-        label.frame = CGRect(x: 0, y: 0, width: 250, height: frame.height)
         return label
     }()
     
     var messageBackground: UIView = {
         let view = UIView()
         view.backgroundColor = .orange
-        view.layer.cornerRadius = 8
-        view.layer.borderWidth = 2
+        view.layer.cornerRadius = 10
+        view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.darkGray.cgColor
         return view
     }()
@@ -71,6 +71,10 @@ class MessageCell: UICollectionViewCell{
     }
     
     func setupLayout() -> Void {
+        // Remove all existing constraints. Required when cells are reused.
+        // If not removed, old constraints can cause problems
+        removeConstraints(constraints)
+        
         profileImage.translatesAutoresizingMaskIntoConstraints = false
         profileImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5).isActive = true
         profileImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
@@ -78,33 +82,34 @@ class MessageCell: UICollectionViewCell{
         profileImage.heightAnchor.constraint(equalTo: profileImage.widthAnchor, multiplier: 1).isActive = true
         
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        messageLabelLeadingConstraint = messageLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 7)
-        messageLabelTrailingConstraint = messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5)
-        messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5).isActive = true
+        messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -7).isActive = true
         messageLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 250).isActive = true
+        // Special handling of sender vs receiver bubble
+        senderBubbleAlignment()
+
 
         messageBackground.translatesAutoresizingMaskIntoConstraints = false
-        messageBackground.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -4).isActive = true
-        messageBackground.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 4).isActive = true
-        messageBackground.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -4).isActive = true
-        messageBackground.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 4).isActive = true
+        messageBackground.leadingAnchor.constraint(equalTo: messageLabel.leadingAnchor, constant: -2).isActive = true
+        messageBackground.trailingAnchor.constraint(equalTo: messageLabel.trailingAnchor, constant: 2).isActive = true
+        messageBackground.topAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -2).isActive = true
+        messageBackground.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 2).isActive = true
         
-        senderBubbleAlignment()
+        
     }
     
     func senderBubbleAlignment() -> Void {
         if let fromSender = message?.fromSender, fromSender{
             // Message is from sender
-            messageLabelLeadingConstraint?.isActive = false
-            messageLabelTrailingConstraint?.isActive = true
+            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+            
             // Hide image
             profileImage.isHidden = true
             messageBackground.backgroundColor = .lightGray
             messageLabel.textColor = .black
         } else {
             // Message is from friend
-            messageLabelLeadingConstraint?.isActive = true
-            messageLabelTrailingConstraint?.isActive = false
+            messageLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 10).isActive = true
+
             // Display image
             profileImage.isHidden = false
             messageBackground.backgroundColor = .orange

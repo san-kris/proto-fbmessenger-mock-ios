@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class FriendsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
@@ -15,6 +16,19 @@ class FriendsController: UICollectionViewController, UICollectionViewDelegateFlo
     
     var messages = [MessageCD]()
     
+    var codeBlocks = [BlockOperation]()
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let context = delegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<FriendCD> = FriendCD.fetchRequest()
+        fetchRequest.sortDescriptors =  [NSSortDescriptor(key: #keyPath(FriendCD.lastMessage.date), ascending: false)]
+        fetchRequest.predicate = NSPredicate(format: "lastMessage != nil")
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        return frc
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,6 +37,11 @@ class FriendsController: UICollectionViewController, UICollectionViewDelegateFlo
         
         // setting dummy data in Core Data
         setupDummyCoreData()
+        do{
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("Error while fetching friends list: \(error)")
+        }
         
         setupView()
      
@@ -40,24 +59,32 @@ class FriendsController: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return fetchedResultsController.sections?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return messages.count
+        if let count = fetchedResultsController.sections?[section].numberOfObjects{
+            return count
+        }
+        return 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! FriendCell
-        cell.message = messages[indexPath.item]
+        if let friend = fetchedResultsController.sections?[indexPath.section].objects?[indexPath.item] as? FriendCD{
+            cell.message = friend.lastMessage
+        }
+        //cell.message = messages[indexPath.item]
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("cell selected \(indexPath.item)")
-        let vc = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
-        vc.friend = messages[indexPath.item].friend
-        navigationController?.pushViewController(vc, animated: true)
+        if let friend = fetchedResultsController.sections?[indexPath.section].objects?[indexPath.item] as? FriendCD{
+            let vc = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+            vc.friend = friend
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -72,5 +99,28 @@ class FriendsController: UICollectionViewController, UICollectionViewDelegateFlo
     }
 
 
+}
+
+extension FriendsController: NSFetchedResultsControllerDelegate{
+    
+    
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        print("Object changed at indexPath: \(indexPath) and newIndexPath: \(newIndexPath)")
+        codeBlocks.append(BlockOperation(block: {
+            self.collectionView.reloadItems(at: [indexPath!, newIndexPath!])
+        }))
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("Friends Content Did Change")
+        for block in codeBlocks{
+            block.start()
+        }
+    }
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("Friends will change")
+    }
 }
 

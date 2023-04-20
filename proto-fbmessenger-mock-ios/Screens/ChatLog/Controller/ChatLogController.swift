@@ -16,11 +16,13 @@ class ChatLogController: UICollectionViewController {
         didSet{
             guard let messages else {return}
             print("Retrieved Messages: \(messages.count)")
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-                self.scrollToBottom()
+            if messages.count != 0{
+                // Update the table only if message has data
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                    self.scrollToBottom()
+                }
             }
-            
         }
     }
 
@@ -28,7 +30,29 @@ class ChatLogController: UICollectionViewController {
         didSet{
             print("Getting chat log for \(friend!.name!)")
             navigationItem.title = friend?.name
-            messages = getChatLog()
+            // fetch list of messages from Core Data
+            // messages = getChatLog()
+            
+            // use fetched Results controller to fetch list of messages
+            let itemCount = fetchMessages()
+            if itemCount > 0 {
+                print("Items found in messages: \(itemCount)")
+                // messages = fetchedResultsController.sections?.first?.objects as? [MessageCD]
+            } else {
+                print("Zero Items found in messages")
+                // self.messages = [MessageCD]()
+            }
+        }
+    }
+    
+    func fetchMessages() -> Int {
+        do{
+            try fetchedResultsController.performFetch()
+            print("Sections fetched: \(fetchedResultsController.sections!.count) and items fetched in section 1: \(fetchedResultsController.sections!.first!.numberOfObjects)")
+            return fetchedResultsController.sections?.first?.numberOfObjects ?? 0
+        } catch {
+            print("Failed to fetch result: \(error)")
+            return 0
         }
     }
     
@@ -59,23 +83,23 @@ class ChatLogController: UICollectionViewController {
     @objc func handleMessageSend(sender: UIButton) -> Void{
         guard let messageText = messageTextField.text else {return}
         print("Sending message: \(messageText)")
+        if messageText.trimmingCharacters(in: CharacterSet(charactersIn: " ")) == ""{
+            return
+        }
+        
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let context = delegate.persistentContainer.viewContext
         
-        if let friend = messages?.first?.friend{
-            let newMessage = FriendsController.createMessageWithText(text:messageText,
-                                                              from: friend,
-                                                              minutesAgo: 0,
-                                                              fromSender: true,
-                                                              context: context)
-            messages?.append(newMessage)
+        if let friend = friend{
+            _ = FriendsController.createMessageWithText(text:messageText,
+                                                        from: friend,
+                                                        minutesAgo: 0,
+                                                        fromSender: true,
+                                                        context: context)
             delegate.saveContext()
             
-            messageTextField.text = ""
-            
+            messageTextField.text = nil
         }
-        
-        
     }
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
@@ -96,15 +120,6 @@ class ChatLogController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        do{
-            try fetchedResultsController.performFetch()
-            print("Sections fetched: \(fetchedResultsController.sections!.count) and items fetched in section 1: \(fetchedResultsController.sections!.first!.numberOfObjects)")
-            
-        } catch {
-            print("Failed to fetch result: \(error)")
-        }
-        
 
         // Register cell classes
         self.collectionView!.register(MessageCell.self, forCellWithReuseIdentifier: messageCell)
@@ -160,18 +175,20 @@ class ChatLogController: UICollectionViewController {
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let context = delegate.persistentContainer.viewContext
         
-        if let friend = messages?.first?.friend{
-            let newMessage = FriendsController.createMessageWithText(text:"Hello Darkness, my old friend", from: friend, minutesAgo: 1, fromSender: false, context: context)
-            messages?.append(newMessage)
+        if let friend = friend{
+            _ = FriendsController.createMessageWithText(text:"Hello Darkness, my old friend", from: friend, minutesAgo: 2, fromSender: false, context: context)
+            _ = FriendsController.createMessageWithText(text:"I'v come to talk with you again", from: friend, minutesAgo: 1, fromSender: false, context: context)
+            // messages?.append(newMessage)
+
             delegate.saveContext()
             
-            messages = messages?.sorted(by: { (messageOne, messageTwo) in
-                if let messageOneDate = messageOne.date, let messagetTwoDate = messageTwo.date{
-                    return messageOneDate <= messagetTwoDate ? true : false
-                }
-                return true
-            })
-            
+//            messages = messages?.sorted(by: { (messageOne, messageTwo) in
+//                if let messageOneDate = messageOne.date, let messagetTwoDate = messageTwo.date{
+//                    return messageOneDate <= messagetTwoDate ? true : false
+//                }
+//                return true
+//            })
+//
         }
         
     }
@@ -188,7 +205,7 @@ class ChatLogController: UICollectionViewController {
     }
     
     deinit {
-        print("ChatLogController Deinit Called")
+        // print("ChatLogController Deinit Called")
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -219,39 +236,99 @@ class ChatLogController: UICollectionViewController {
     }
     
     func scrollToBottom() -> Void{
-        let indexPath = IndexPath(item: self.messages!.count - 1, section: 0)
-        self.collectionView.scrollToItem(at: indexPath , at: UICollectionView.ScrollPosition.bottom, animated: true)
+        if let numberOfItems = fetchedResultsController.sections?.first?.numberOfObjects{
+            // Create indexPath of last item for first section
+            let indexPath = IndexPath(item: numberOfItems - 1, section: 0)
+            // get the rect attribute of the last message
+            let lastItemLayoutAttributes = collectionView.layoutAttributesForItem(at: indexPath)
+            if let lastItemLayoutAttributes{
+                print("Last Item LayoutAttributes: \(lastItemLayoutAttributes.frame.origin.y), \(lastItemLayoutAttributes.frame)")
+                // crerate a new X,Y origin with Y raised by 50 points. The size of text field
+                let newPointOrigin = CGPoint(x: lastItemLayoutAttributes.frame.origin.x, y: lastItemLayoutAttributes.frame.origin.y + 55)
+                // create a new rect with new Y value
+                let newLastItemRect = CGRect(origin: newPointOrigin, size: lastItemLayoutAttributes.frame.size)
+                // bring the last item to focus
+                collectionView.scrollRectToVisible(newLastItemRect, animated: true)
+            } else {
+                // Scroll to item works well if there is only keyboard and no floating text field
+                // It causes the last message to be hidden behind the text field
+                // use scrollRectToVisible to show last item
+                self.collectionView.scrollToItem(at: indexPath , at: UICollectionView.ScrollPosition.bottom, animated: true)
+            }
+            
+        }
+        
         // collectionView.contentOffset.y = 50
     }
 }
 
 //MARK: - NSFetchedResultsControllerDelegate
+
+// create a BlockOperation empty array
+var blockOperations = [BlockOperation]()
+
 extension ChatLogController: NSFetchedResultsControllerDelegate{
+    
+    // Function called before changes to fetche results
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        // Empty the block operations array
+        blockOperations.removeAll(keepingCapacity: false)
+    }
+    
+    // Function is called when a object in fetched resuts changes
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        print("FRC Event occured: \(type)")
+        // check if insert event occured
         if type == NSFetchedResultsChangeType.insert{
-            // collectionView.insertItems(at: <#T##[IndexPath]#>)
+            // add a executable block to array
+            blockOperations.append(BlockOperation(block: { [weak self] in
+                if let thisObject = self{
+                    thisObject.collectionView.insertItems(at: [newIndexPath!])
+                }
+            }))
         }
     }
+
+    
+    // function called after change to fetched results
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        // perform multiple updates on collection view
+        collectionView.performBatchUpdates {
+            // loop through block opps array and execute the block
+            for operation in blockOperations{
+                operation.start()
+            }
+        } completion: { [weak self] completed in
+            // empty block ops array
+            blockOperations.removeAll(keepingCapacity: false)
+            // scroll to the borrom of the list
+            self?.scrollToBottom()
+        }
+
+    }
+    
 }
 
 //MARK: - UICollectionViewDataSource
 extension ChatLogController{
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
+        // print("Number of sections: \(fetchedResultsController.sections?.count ?? 0)")
         return fetchedResultsController.sections?.count ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         // Return number of items in section zero
+        // print("Number of objects in section: \(fetchedResultsController.sections?[0].numberOfObjects ?? 0)")
         return fetchedResultsController.sections?[0].numberOfObjects ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: messageCell, for: indexPath) as! MessageCell
         // Configure the cell
-        // let message = fetchedResultsController.object(at: indexPath)
-        cell.message = messages![indexPath.item]
+        print("Need Cell for indexPath: \(indexPath.item)")
+        cell.message = fetchedResultsController.object(at: indexPath)
         cell.backgroundColor = .yellow
         return cell
     }
@@ -266,7 +343,7 @@ extension ChatLogController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // TODO: Need to safely unwrap message
         var height: CGFloat = 5
-        if let messageText = messages![indexPath.item].text{
+        if let messageText = fetchedResultsController.object(at: indexPath).text{
             height = calculateDisplayHeightForText(messageText, withWidth: 250)
             // set minunum height to 35 to ensure profile image can fit
             height = height < 20 ? 37 : height + 15
@@ -282,7 +359,7 @@ extension ChatLogController: UICollectionViewDelegateFlowLayout{
                                                           options: NSStringDrawingOptions.usesLineFragmentOrigin,
                                                           attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)],
                                                           context: nil)
-        print(newSize)
+        // print(newSize)
         return  ceil(newSize.height)
     }
     

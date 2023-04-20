@@ -59,7 +59,7 @@ class MessageCell: UICollectionViewCell{
     }
     
     deinit {
-        print("Message Cell DeInit Called")
+        // print("Message Cell DeInit Called")
     }
     
     func setupView() -> Void {

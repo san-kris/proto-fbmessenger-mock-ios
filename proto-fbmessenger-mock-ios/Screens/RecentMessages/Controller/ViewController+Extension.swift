@@ -45,6 +45,10 @@ extension FriendsController{
             _ = FriendsController.createMessageWithText(text: "Can I watch TV", from: friend3, minutesAgo: 4, fromSender: true,context: context)
             _ = FriendsController.createMessageWithText(text: "Give me fooood", from: friend3, minutesAgo: 3, fromSender: false,context: context)
             _ = FriendsController.createMessageWithText(text: "What do we have? What options do I have? I dont want this, I dont want that. I am the best", from: friend3, minutesAgo: 2, fromSender: true, context: context)
+            
+            let friend4 = FriendCD(context: context)
+            friend4.setValuesForKeys([#keyPath(FriendCD.name) : "Po La",
+                                     #keyPath(FriendCD.profilePicture) : "icons8-heart-suit-96"])
 
             delegate?.saveContext()
             
@@ -134,6 +138,7 @@ extension FriendsController{
                                   #keyPath(MessageCD.date) : Date().addingTimeInterval(TimeInterval(-minutesAgo * 60)),
                                   #keyPath(MessageCD.fromSender): fromSender,
                                   #keyPath(MessageCD.friend) : from])
+        from.setValue(message, forKey: #keyPath(FriendCD.lastMessage))
         return message
     }
     

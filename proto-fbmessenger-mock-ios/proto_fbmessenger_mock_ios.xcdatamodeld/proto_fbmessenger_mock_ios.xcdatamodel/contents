@@ -3,6 +3,7 @@
     <entity name="FriendCD" representedClassName=".FriendCD" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" valueTransformerName="ColorTeansformer"/>
         <attribute name="profilePicture" optional="YES" attributeType="String"/>
+        <relationship name="lastMessage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MessageCD"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageCD" inverseName="friend" inverseEntity="MessageCD"/>
     </entity>
     <entity name="MessageCD" representedClassName=".MessageCD" syncable="YES">
